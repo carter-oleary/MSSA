@@ -1,30 +1,30 @@
 ﻿using System.Text;
 
-public class MyStack
+public class MyStack<T>
 {
-    public int[] Stack {  get; set; }
+    private T[] Stack;
 
-    public MyStack(int[] stack)
+    public MyStack(T[] stack)
     {
         Stack = stack.Reverse().ToArray();
     }
 
-    public void Push(int i)
+    public void Push(T i)
     {
-        int[] temp = Stack;
+        T[] temp = Stack;
         Array.Resize(ref temp, Stack.Length + 1);
         Stack = temp;
         Stack[Stack.Length - 1] = i;
     }
 
-    public int Pop()
+    public T Pop()
     {
-        int popped = Stack[Stack.Length - 1];
+        T popped = Stack[Stack.Length - 1];
         Stack = Stack.Take(Stack.Length - 1).ToArray();
         return popped;
     }
 
-    public int Peek()
+    public T Peek()
     {
         return Stack[Stack.Length - 1]; 
     }
@@ -33,9 +33,9 @@ public class MyStack
     {
         if (Stack.Length == 0) return "Empty stack.";
         StringBuilder sb = new StringBuilder();
-        int[] printArr = Stack.Reverse().ToArray();
+        T[] printArr = Stack.Reverse().ToArray();
         sb.Append("[ ");
-        foreach (int i in printArr) { sb.Append($"{i} "); }
+        foreach (T i in printArr) { sb.Append($"{i} "); }
         sb.Append("]");
         return sb.ToString();
     }

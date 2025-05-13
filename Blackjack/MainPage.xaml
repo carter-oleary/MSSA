@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Blackjack.MainPage"
+             BackgroundColor="#1E6C41">
+
+    <Grid RowDefinitions="Auto,*,*,Auto,Auto"
+          Padding="20">
+
+        <!-- Header: Game Title and Stats -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto" Margin="0,0,0,20">
+            <Label Text="Blackjack" 
+                   FontSize="32" 
+                   FontAttributes="Bold" 
+                   TextColor="White"
+                   VerticalOptions="Center" />
+
+            <StackLayout Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                <Label x:Name="BalanceLabel" 
+                       Text="Balance: $X" 
+                       FontSize="18" 
+                       TextColor="White"
+                       VerticalOptions="Center" />
+            </StackLayout>
+
+            <Button Grid.Column="2"
+                    Text="Menu"
+                    WidthRequest="100"
+                    BackgroundColor="#333333"
+                    TextColor="White"
+                    CornerRadius="5"
+                    Margin="10,0,0,0" />
+        </Grid>
+
+        <!-- Dealer's Cards Area -->
+        <StackLayout Grid.Row="1" Spacing="10" Margin="0,10">
+            <Label Text="Dealer" 
+                   FontSize="22" 
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+
+            <Label x:Name="DealerScoreLabel" 
+                   Text="Score: ??" 
+                   FontSize="18" 
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+
+            <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                <HorizontalStackLayout x:Name="DealerCardsLayout" 
+                                       Spacing="-40" 
+                                       HorizontalOptions="Center">
+                    <!-- Dealer cards will be added here programmatically -->
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           HasShadow="True" 
+                           Padding="0" 
+                           HeightRequest="160" 
+                           WidthRequest="120">
+                        <Image Source="card_back.png" Aspect="AspectFill" />
+                    </Frame>
+
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           HasShadow="True" 
+                           Padding="0" 
+                           HeightRequest="160" 
+                           WidthRequest="120">
+                        <Grid>
+                            <Label Text="10" 
+                                   FontSize="24" 
+                                   Margin="5,5,0,0" 
+                                   TextColor="Black" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="Start" 
+                                   HorizontalOptions="Start" />
+
+                            <Label Text="♥" 
+                                   FontSize="30" 
+                                   TextColor="Red" 
+                                   HorizontalOptions="Center" 
+                                   VerticalOptions="Center" />
+
+                            <Label Text="10" 
+                                   FontSize="24" 
+                                   Margin="0,0,5,5" 
+                                   TextColor="Black" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="End" 
+                                   HorizontalOptions="End" 
+                                   Rotation="180" />
+                        </Grid>
+                    </Frame>
+                </HorizontalStackLayout>
+            </ScrollView>
+        </StackLayout>
+
+        <!-- Player's Cards Area -->
+        <StackLayout Grid.Row="2" Spacing="10" Margin="0,10">
+            <Label Text="Player" 
+                   FontSize="22" 
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+
+            <Label x:Name="PlayerScoreLabel" 
+                   Text="Score: 16" 
+                   FontSize="18" 
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+
+            <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                <HorizontalStackLayout x:Name="PlayerCardsLayout" 
+                                       Spacing="-40" 
+                                       HorizontalOptions="Center">
+                    <!-- Player cards will be added here programmatically -->
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           HasShadow="True" 
+                           Padding="0" 
+                           HeightRequest="160" 
+                           WidthRequest="120">
+                        <Grid>
+                            <Label Text="A" 
+                                   FontSize="24" 
+                                   Margin="5,5,0,0" 
+                                   TextColor="Black" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="Start" 
+                                   HorizontalOptions="Start" />
+
+                            <Label Text="♠" 
+                                   FontSize="30" 
+                                   TextColor="Black" 
+                                   HorizontalOptions="Center" 
+                                   VerticalOptions="Center" />
+
+                            <Label Text="A" 
+                                   FontSize="24" 
+                                   Margin="0,0,5,5" 
+                                   TextColor="Black" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="End" 
+                                   HorizontalOptions="End" 
+                                   Rotation="180" />
+                        </Grid>
+                    </Frame>
+
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           HasShadow="True" 
+                           Padding="0" 
+                           HeightRequest="160" 
+                           WidthRequest="120">
+                        <Grid>
+                            <Label Text="6" 
+                                   FontSize="24" 
+                                   Margin="5,5,0,0" 
+                                   TextColor="Black" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="Start" 
+                                   HorizontalOptions="Start" />
+
+                            <Label Text="♣" 
+                                   FontSize="30" 
+                                   TextColor="Black" 
+                                   HorizontalOptions="Center" 
+                                   VerticalOptions="Center" />
+
+                            <Label Text="6" 
+                                   FontSize="24" 
+                                   Margin="0,0,5,5" 
+                                   TextColor="Black" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="End" 
+                                   HorizontalOptions="End" 
+                                   Rotation="180" />
+                        </Grid>
+                    </Frame>
+
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           HasShadow="True" 
+                           Padding="0" 
+                           HeightRequest="160" 
+                           WidthRequest="120">
+                        <Grid>
+                            <Label Text="9" 
+                                   FontSize="24" 
+                                   Margin="5,5,0,0" 
+                                   TextColor="Red" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="Start" 
+                                   HorizontalOptions="Start" />
+
+                            <Label Text="♦" 
+                                   FontSize="30" 
+                                   TextColor="Red" 
+                                   HorizontalOptions="Center" 
+                                   VerticalOptions="Center" />
+
+                            <Label Text="9" 
+                                   FontSize="24" 
+                                   Margin="0,0,5,5" 
+                                   TextColor="Red" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="End" 
+                                   HorizontalOptions="End" 
+                                   Rotation="180" />
+                        </Grid>
+                    </Frame>
+                </HorizontalStackLayout>
+            </ScrollView>
+        </StackLayout>
+
+        <!-- Bet Controls -->
+        <StackLayout Grid.Row="3" Margin="0,20,0,20">
+            <Label Text="Current Bet: $100" 
+                   x:Name="BetAmountLabel"
+                   FontSize="18" 
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                <Button Text="-25" 
+                        WidthRequest="60" 
+                        BackgroundColor="#CC3333"
+                        TextColor="White"
+                        CornerRadius="5" />
+
+                <Button Text="-5" 
+                        WidthRequest="60" 
+                        BackgroundColor="#CC3333"
+                        TextColor="White"
+                        CornerRadius="5" />
+
+                <Button Text="+5" 
+                        WidthRequest="60" 
+                        BackgroundColor="#33CC33"
+                        TextColor="White"
+                        CornerRadius="5" />
+
+                <Button Text="+25" 
+                        WidthRequest="60" 
+                        BackgroundColor="#33CC33"
+                        TextColor="White"
+                        CornerRadius="5" />
+            </HorizontalStackLayout>
+        </StackLayout>
+
+        <!-- Game Controls -->
+        <Grid Grid.Row="4" ColumnDefinitions="*,*,*,*" ColumnSpacing="10">
+            <Button Text="Deal" 
+                    Grid.Column="0"
+                    BackgroundColor="#FFD700"
+                    TextColor="Black"
+                    FontAttributes="Bold"
+                    CornerRadius="5" />
+
+            <Button Text="Hit" 
+                    Grid.Column="1"
+                    BackgroundColor="#F5F5F5"
+                    TextColor="Black"
+                    CornerRadius="5" />
+
+            <Button Text="Stand" 
+                    Grid.Column="2"
+                    BackgroundColor="#F5F5F5"
+                    TextColor="Black"
+                    CornerRadius="5" />
+
+            <Button Text="Double" 
+                    Grid.Column="3"
+                    BackgroundColor="#F5F5F5"
+                    TextColor="Black"
+                    CornerRadius="5" />
+        </Grid>
+
+        <!-- Result Popup (Hidden by default) -->
+        <Frame x:Name="ResultFrame"
+               Grid.Row="0" Grid.RowSpan="5"
+               BackgroundColor="#80000000"
+               IsVisible="false">
+            <Frame VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   BackgroundColor="White"
+                   CornerRadius="10"
+                   WidthRequest="300"
+                   HeightRequest="200"
+                   Padding="20">
+                <StackLayout VerticalOptions="Center" Spacing="20">
+                    <Label x:Name="ResultLabel"
+                           Text="You Win!"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center" />
+
+                    <Label x:Name="ResultDetailsLabel"
+                           Text="Dealer busted with 22. You won $100!"
+                           FontSize="16"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
+
+                    <Button Text="Continue"
+                            BackgroundColor="#1E6C41"
+                            TextColor="White"
+                            CornerRadius="5"
+                            HorizontalOptions="Center"
+                            WidthRequest="150" />
+                </StackLayout>
+            </Frame>
+        </Frame>
+    </Grid>
+</ContentPage>

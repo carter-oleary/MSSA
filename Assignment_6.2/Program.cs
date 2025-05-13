@@ -1,6 +1,6 @@
 ﻿// Assignment 6.2.1
 Console.WriteLine("----Assignment 6.2.1----");
-MyStack stack = new MyStack([0, 1, 2, 3]);
+MyStack<int> stack = new MyStack<int>([0, 1, 2, 3]);
 Console.WriteLine(stack.ToString());
 Console.WriteLine("Pushing 4...");
 stack.Push(4);
