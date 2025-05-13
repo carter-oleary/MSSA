@@ -26,34 +26,25 @@ PrintArray(ArrayProduct(arr2));
 int[] ArrayProduct(int[] arr)
 {
     int[] prodArr = new int[arr.Length]; // Tracks the products of each iteration
-    int product = 1; // Total product of the array
-    int numZeros = 0; // Number of zeroes in array
-    int zeroIndex = -1; // Index of the zero in the array
+    Array.Fill(prodArr, 1);
 
-    for (int i = 0; i < arr.Length; i++)
-    {        
-        if (arr[i] == 0)
-        {
-            numZeros++;
-            if (numZeros == 1) zeroIndex = i;
-            else return prodArr; // More than one zero, all instances will be zero
-        }
-        else product *= arr[i];
-    }
-
-    //With 1 zero, the only entry with a product will be the one that excludes zero (zeroIndex)
-    if (numZeros == 1)
+    int lProd = 1;
+    int rProd = 1;
+    for(int i = 0; i < arr.Length; i++)
     {
-        prodArr[zeroIndex] = product;
-        return prodArr;
+        prodArr[i] = lProd;
+        lProd *= arr[i];
     }
 
-    //Divides total product by each individual entry to populate product array
-    for (int i = 0; i < arr.Length; i++)
+    for (int i = arr.Length - 1; i >= 0; i--)
     {
-        prodArr[i] = product / arr[i];
+        prodArr[i] *= rProd;
+        rProd *= arr[i];
     }
+
     return prodArr;
+
+
 }
 
 void PrintArray(int[] arr)
