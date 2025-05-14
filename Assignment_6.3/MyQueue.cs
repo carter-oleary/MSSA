@@ -1,30 +1,60 @@
-﻿public class MyQueue<T>
+﻿public class MyQueue
 {
-    public LinkedList<T> Queue { get; set; }
+    private QueueNode head;
+    private QueueNode tail;
+    private int count;
+
 
     public MyQueue()
     {
-        Queue = new LinkedList<T>();
+        head = new QueueNode();
+        tail = head;
+        count = 0;
     }
 
-    public void Enqueue(T item)
+    public void Enqueue(Customer item)
     {
-        Queue.AddLast(item);
+        QueueNode temp = new QueueNode(item);
+        if (count == 0)
+        {
+            head = temp;
+            tail = temp;
+        }
+        else
+        {
+            tail.next = temp;
+            tail = temp;
+        }
+        count++;
+
     }
 
-    public T Dequeue()
+    public string Dequeue()
     {
-        T item = Queue.First.Value;
-        Queue.RemoveFirst();
-        return item;
+        if(count == 0)
+        {
+            return "Queue is empty";
+        }
+        QueueNode temp = head;
+        head = head.next;
+        count--;
+        return temp.data.ToString();
     }
 
     public void Display()
     {
-        foreach (var item in Queue)
+        if (count == 0)
         {
-            Console.Write($"{item} ");
+            Console.WriteLine("Queue is empty.");
+            return;
+        }
+        QueueNode temp = head;
+        while (temp != null)
+        {
+            Console.Write(temp.data.Name + " ");
+            temp = temp.next;
         }
         Console.WriteLine();
+        
     }
 }
