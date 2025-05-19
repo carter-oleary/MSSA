@@ -1,4 +1,6 @@
-﻿namespace Blackjack
+﻿using System.Threading.Tasks;
+
+namespace Blackjack
 {
 
     public partial class MainPage : ContentPage
@@ -53,6 +55,8 @@
             }
 
             UpdateUI();
+            // Check for player bust
+            if (hand.HandValue > 21 && !hand.IsDealer) CheckWinner();
         }
 
         private void UpdateUI()
@@ -86,7 +90,7 @@
 
         }
 
-       private void StartGame()
+       private async Task StartGame()
        {
             player.ClearHand();
             dealer.ClearHand();
@@ -96,11 +100,54 @@
             dealer.Hit();
             AddCardsToUI(player);
             AddCardsToUI(dealer);
-            DealButton.IsEnabled = false;
-            HitButton.IsEnabled = true;
-            StandButton.IsEnabled = true;
-            DoubleButton.IsEnabled = true;
             state = GameState.PlayerTurn;
+            UpdateUI();
+            if(player.HandValue == 21 || dealer.HandValue >= 10)
+            {
+                await CheckBlackjack();
+            }
+        }
+
+        private async Task CheckBlackjack()
+        {
+            dealer.Cards[1].IsFacedown = false;
+            dealer.GetHandValue();
+            if (dealer.HandValue == 21 && player.HandValue == 21)
+            {
+                AddCardsToUI(dealer);
+                GameStatusLabel.Text = "Push, both blackjack!";
+                bankroll += betValue;
+            }
+            else if(player.HandValue == 21)
+            {
+                AddCardsToUI(dealer);
+                GameStatusLabel.Text = "Blackjack!!!";
+                bankroll += (int)(betValue * 2.5);
+            }
+            else if(dealer.HandValue == 21)
+            {
+                AddCardsToUI(dealer);
+                GameStatusLabel.Text = "Dealer blackjack, you lose";
+                betValue = 0;
+            }
+            else {
+                dealer.Cards[1].IsFacedown = true;
+                dealer.GetHandValue();
+                return;
+            }
+            await Task.Delay(2000);
+            ResetHand();
+        }
+
+        private void ResetHand()
+        {
+            state = GameState.Betting;
+            player.ClearHand();
+            dealer.ClearHand();
+            DealerCards.Children.Clear();
+            PlayerCards.Children.Clear();
+            betValue = 0;
+            UpdateUI();
         }
 
         private void OnChipClicked(object sender, EventArgs e)
@@ -116,6 +163,7 @@
 
         private void OnDealClicked(object sender, EventArgs e)
         {
+            if (state != GameState.Betting || betValue == 0) return;
             StartGame();
         }
 
@@ -134,8 +182,8 @@
             dealer.Cards[1].IsFacedown = false;
             dealer.GetHandValue();
             DealerScoreLabel.Text = dealer.HandValue.ToString();
-            state = GameState.DealerTurn;
             AddCardsToUI(dealer);
+            DealerTurn();
         }
 
         private void OnDoubleClicked(object sender, EventArgs e)
@@ -144,6 +192,61 @@
             CurrentBetLabel.Text = betValue.ToString();
             OnHitClicked(sender, e);
             OnStandClicked(sender, e);
+        }
+
+        private async Task DealerTurn()
+        {
+            state = GameState.DealerTurn;
+            // Display dealers second card
+            dealer.Cards[1].IsFacedown = false;
+            dealer.GetHandValue();
+            AddCardsToUI(dealer);
+            await Task.Delay(1000);
+
+            // Check for hit or stand
+            while(dealer.HandValue < 17 || (dealer.HandValue == 17 && dealer.NumAces > 0))
+            {
+                dealer.Hit();
+                AddCardsToUI(dealer);
+                await Task.Delay(300);
+            }
+
+            await Task.Delay(1000);
+            CheckWinner();
+
+        }
+
+        private async Task CheckWinner()
+        {
+            state = GameState.EndHand;
+
+            //Check for player or dealer busts
+            if(player.HandValue > 21)
+            {
+                GameStatusLabel.Text = "Player busts, you lose!";
+                betValue = 0;
+            } else if(dealer.HandValue > 21)
+            {
+                GameStatusLabel.Text = "Dealer busts, you win!";
+                bankroll += betValue * 2;
+            } else
+            {
+                if(player.HandValue > dealer.HandValue)
+                {
+                    GameStatusLabel.Text = "You win!";
+                    bankroll += betValue * 2;
+                } else if(dealer.HandValue > player.HandValue)
+                {
+                    GameStatusLabel.Text = "You lose!";
+                    betValue = 0;
+                } else
+                {
+                    GameStatusLabel.Text = "Push!";
+                }
+            }
+            // Auto-reset after a delay
+            await Task.Delay(3000);
+            ResetHand();
         }
     }
 
