@@ -25,6 +25,7 @@
             bankroll = 1000;
             state = GameState.Betting;
             InitializeComponent();
+            UpdateUI();
         }
 
 
@@ -101,6 +102,7 @@
             StandButton.IsEnabled = true;
             DoubleButton.IsEnabled = true;
             state = GameState.PlayerTurn;
+            UpdateUI();
         }
 
         private void OnChipClicked(object sender, EventArgs e)
