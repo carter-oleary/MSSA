@@ -243,6 +243,7 @@ namespace Blackjack
                 } else
                 {
                     GameStatusLabel.Text = "Push!";
+                    bankroll += betValue;
                 }
             }
             // Auto-reset after a delay
