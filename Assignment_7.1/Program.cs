@@ -6,8 +6,11 @@ int[] grades = new int[n];
 for (int i = 0; i < n; i++) grades[i] = r.Next(40, 100);
 Console.WriteLine($"Initial array: {Functions.PrintArray(grades)}");
 Functions.SelectionSort(grades);
-Console.WriteLine($"Sorted array: {Functions.PrintArray(grades)}\n");
-
+Console.WriteLine($"Selection Sorted array: {Functions.PrintArray(grades)}\n");
+for (int i = 0; i < n; i++) grades[i] = r.Next(40, 100);
+Console.WriteLine($"Initial array: {Functions.PrintArray(grades)}");
+Functions.InsertionSort(grades);
+Console.WriteLine($"Insertion Sorted array: {Functions.PrintArray(grades)}\n");
 
 // Assignment 7.1.2
 Console.WriteLine("----Assignment 7.1.2----");

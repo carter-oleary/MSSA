@@ -23,6 +23,23 @@ public static class Functions
         }
     }
 
+    public static void InsertionSort(int[] arr)
+    {
+        int temp = 0;
+        int pos = 0;
+        for(int i = 1; i < arr.Length; i++)
+        {
+            temp = arr[i];
+            pos = i;
+            while (pos > 0 && arr[pos - 1] > temp) 
+            {
+                arr[pos] = arr[pos - 1];
+                pos--;
+            }
+            arr[pos] = temp;
+        }
+    }
+
     public static string MergeStrings(string s1, string s2)
     {
         int minLen = Math.Min(s1.Length, s2.Length);
