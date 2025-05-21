@@ -30,7 +30,8 @@
         }
         TreeNode? checkNode = root;
         while (checkNode != null) {
-            if(node.val <= checkNode.val)
+            if (node.val == checkNode.val) return;
+            if(node.val < checkNode.val)
             {
                 if(checkNode.left != null)
                 {
