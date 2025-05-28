@@ -199,6 +199,7 @@ namespace Blackjack
 
         private void OnDoubleClicked(object sender, EventArgs e)
         {
+            bankroll -= betValue;
             betValue *= 2;
             CurrentBetLabel.Text = betValue.ToString();
             OnHitClicked(sender, e);
