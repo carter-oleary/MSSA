@@ -95,7 +95,7 @@ namespace Blackjack
        {
             player.ClearHand();
             dealer.ClearHand();
-            if (deck.deck.Count <= 4)
+            if (deck.deck.Count < 4)
             {
                 await DisplayAlert("Out of Cards!", "Reshuffling", "OK");
             }
