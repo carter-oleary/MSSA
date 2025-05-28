@@ -50,15 +50,6 @@ public class Hand
         }
     }
 
-    public void PrintHand()
-    {
-        foreach (Card c in Cards)
-        {
-            Console.Write($"{c.ToString()} ");
-        }
-        Console.WriteLine($", Total: {HandValue}");
-    }
-
     public void ClearHand()
     {
         Cards.Clear();

@@ -1,4 +1,6 @@
-﻿namespace Blackjack;
+﻿using System.Threading.Tasks;
+
+namespace Blackjack;
 public class Deck
 {
     public Stack<Card> deck = new Stack<Card>();
@@ -52,9 +54,6 @@ public class Deck
             return c;
         }
         catch (Exception e) { 
-            Console.WriteLine("No more cards in the deck!");
-            Console.WriteLine("Reshuffling...");
-            Thread.Sleep(3000);
             deck = new Deck().deck;
             return deck.Pop();
         }

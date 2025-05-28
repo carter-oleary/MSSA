@@ -27,7 +27,5 @@ public class Card
             default: return [Convert.ToInt32(Value)];
         }
     }
-
-    public string ToString() { return $"{Value}{Suit}"; }
 }
 

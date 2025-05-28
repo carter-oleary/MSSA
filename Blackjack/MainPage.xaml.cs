@@ -95,6 +95,10 @@ namespace Blackjack
        {
             player.ClearHand();
             dealer.ClearHand();
+            if (deck.deck.Count <= 4)
+            {
+                await DisplayAlert("Out of Cards!", "Reshuffling", "OK");
+            }
             player.Hit();
             dealer.Hit();
             player.Hit();
@@ -147,6 +151,8 @@ namespace Blackjack
             dealer.ClearHand();
             DealerCards.Children.Clear();
             PlayerCards.Children.Clear();
+            PlayerScoreLabel.Text = "0";
+            DealerScoreLabel.Text = "0";
             betValue = 0;
             UpdateUI();
         }
@@ -168,8 +174,12 @@ namespace Blackjack
             StartGame();
         }
 
-        private void OnHitClicked(object sender, EventArgs e)
+        private async void OnHitClicked(object sender, EventArgs e)
         {
+            if (deck.deck.Count == 0)
+            {
+                await DisplayAlert("Out of Cards!", "Reshuffling", "OK");
+            }
             player.Hit();
             AddCardsToUI(player);
         }
@@ -207,6 +217,10 @@ namespace Blackjack
             // Check for hit or stand
             while(dealer.HandValue < 17 || (dealer.HandValue == 17 && dealer.NumAces > 0))
             {
+                if(deck.deck.Count == 0)
+                {
+                    await DisplayAlert("Out of Cards!", "Reshuffling", "OK");
+                }
                 dealer.Hit();
                 AddCardsToUI(dealer);
                 await Task.Delay(300);
