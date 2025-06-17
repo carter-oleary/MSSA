@@ -1,0 +1,84 @@
+﻿namespace Assignment11._2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("----Assignment 11.2.1----");
+            int[] prices1 = [7, 1, 5, 3, 6, 4];
+            int[] prices2 = [7, 6, 4, 3, 1];
+            Console.WriteLine("Max Profit for prices1: " + string.Join(", ", prices1));
+            Console.WriteLine(MaxProfit(prices1));
+            Console.WriteLine("Max Profit for prices2: " + string.Join(", ", prices2));
+            Console.WriteLine(MaxProfit(prices2));
+
+            Console.WriteLine("\n----Assignment 11.2.2----");
+            ListNode node = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
+
+            Console.Write("Original List: ");
+            while (node != null)
+            {
+                Console.Write(node.val + " ");
+                node = node.next;
+            }
+            ListNode reversedNode = ReverseList(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))));
+            Console.Write("\nReversed List: ");
+            while (reversedNode != null)
+            {
+                Console.Write(reversedNode.val + " ");
+                reversedNode = reversedNode.next;
+            }
+
+
+        }
+
+        public static int MaxProfit(int[] prices)
+        {
+            // Check length 0 or 1 edge case
+            if(prices.Length <= 1) return 0;
+
+            // Check if largest price comes after the smallest price
+            int minPrice = prices.Min();
+            int maxPrice = prices.Max();
+            var priceList = prices.ToList();
+            if (priceList.IndexOf(minPrice) < priceList.IndexOf(maxPrice)) return maxPrice - minPrice;
+
+            int maxProfit = 0;
+            for (int i = 0; i < prices.Length - 1; i++)
+            {
+                int j = i + 1;
+                while (j < prices.Length && prices[j] > prices[i])
+                {
+                    maxProfit = Math.Max(maxProfit, prices[j] - prices[i]);
+                    j++;
+                }
+            }
+
+            return maxProfit;
+        }
+
+        public static ListNode ReverseList(ListNode head)
+        {
+            if(head == null || head.next == null) return head;
+
+            ListNode cur = head;
+            var nodeList = new List<ListNode>();
+            while (cur != null)
+            {
+                nodeList.Add(cur);
+                cur = cur.next;
+            }
+            nodeList.Reverse();
+            cur = nodeList[0];
+            nodeList[0].next = null; // Set the next of the new tail to null
+            head = cur;
+            for(int i = 1; i < nodeList.Count; i++)
+            {
+                cur.next = nodeList[i];
+                cur = cur.next;
+                cur.next = null; // Set the next of the current node to null
+            }
+            return head;
+        }
+    }
+}
