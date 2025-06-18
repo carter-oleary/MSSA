@@ -21,7 +21,7 @@
                 Console.Write(node.val + " ");
                 node = node.next;
             }
-            ListNode reversedNode = ReverseList(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))));
+            ListNode reversedNode = ReverseListRecursive(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))));
             Console.Write("\nReversed List: ");
             while (reversedNode != null)
             {
@@ -35,7 +35,7 @@
         public static int MaxProfit(int[] prices)
         {
             // Check length 0 or 1 edge case
-            if(prices.Length <= 1) return 0;
+            if (prices.Length <= 1) return 0;
 
             // Check if largest price comes after the smallest price
             int minPrice = prices.Min();
@@ -47,7 +47,7 @@
             for (int i = 1; i < prices.Length - 1; i++)
             {
                 minPrice = Math.Min(minPrice, prices[i]);
-                if(prices[i + 1] > minPrice)
+                if (prices[i + 1] > minPrice)
                 {
                     maxProfit = Math.Max(maxProfit, prices[i + 1] - minPrice);
                 }
@@ -56,28 +56,31 @@
             return maxProfit;
         }
 
-        public static ListNode ReverseList(ListNode head)
+        public static ListNode ReverseListRecursive(ListNode head)
         {
-            if(head == null || head.next == null) return head;
+            // Base case: if the list is empty or has only one node
+            if (head == null || head.next == null)
+                return head;
+            // Recursive case: reverse the rest of the list
+            ListNode newHead = ReverseListRecursive(head.next);
+            // Make the next node point to the current node
+            head.next.next = head;
+            head.next = null; // Set the next of the current node to null
+            return newHead;
+        }
 
-            ListNode cur = head;
-            var nodeList = new List<ListNode>();
-            while (cur != null)
+        public static ListNode ReverseListIterative(ListNode head)
+        {
+            ListNode prev = null;
+            ListNode current = head;
+            while (current != null)
             {
-                nodeList.Add(cur);
-                cur = cur.next;
+                ListNode nextTemp = current.next; // Store the next node
+                current.next = prev; // Reverse the link
+                prev = current; // Move prev to current
+                current = nextTemp; // Move to the next node
             }
-            nodeList.Reverse();
-            cur = nodeList[0];
-            nodeList[0].next = null; // Set the next of the new tail to null
-            head = cur;
-            for(int i = 1; i < nodeList.Count; i++)
-            {
-                cur.next = nodeList[i];
-                cur = cur.next;
-                cur.next = null; // Set the next of the current node to null
-            }
-            return head;
+            return prev; // New head of the reversed list
         }
     }
 }
