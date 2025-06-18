@@ -42,15 +42,14 @@
             int maxPrice = prices.Max();
             var priceList = prices.ToList();
             if (priceList.IndexOf(minPrice) < priceList.IndexOf(maxPrice)) return maxPrice - minPrice;
-
+            minPrice = prices[0]; // Reset minPrice to the first element
             int maxProfit = 0;
-            for (int i = 0; i < prices.Length - 1; i++)
+            for (int i = 1; i < prices.Length - 1; i++)
             {
-                int j = i + 1;
-                while (j < prices.Length && prices[j] > prices[i])
+                minPrice = Math.Min(minPrice, prices[i]);
+                if(prices[i + 1] > minPrice)
                 {
-                    maxProfit = Math.Max(maxProfit, prices[j] - prices[i]);
-                    j++;
+                    maxProfit = Math.Max(maxProfit, prices[i + 1] - minPrice);
                 }
             }
 
