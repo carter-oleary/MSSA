@@ -22,12 +22,12 @@
         public static void SortColors(int[] nums)
         {
             if (nums.Length <= 1) return;
-            int[] count = new int[3];
+            int[] count = new int[3]; // Track instances of 3 colors
             for(int i = 0; i < nums.Length; i++)
             {
-                count[nums[i]]++;
+                count[nums[i]]++; // Count occurrences of each color (0, 1, 2)
             }
-            int prevSum = 0;
+            int prevSum = 0; // To keep track of the cumulative count of colors
             int pointer = 0;
             for (int i = 0; i < nums.Length; i++)
             {
@@ -35,7 +35,8 @@
                 {
                     prevSum += count[pointer];
                     pointer++;
-                }
+                } 
+                // Bypass colors with no instances
                 while (count[pointer] == 0)
                 {
                     pointer++;
