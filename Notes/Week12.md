@@ -61,4 +61,17 @@
   6. Create `CryptoStream` object
   7. Write transformed data to buffer streams
   8. Close streams
+### Hashing Data
+- A hash is a numerical representation of a piece of data
 ## Asymmetric Encryption
+- Asymmetric encryption uses
+  - A public key to encrypt data
+  - A private key to decrypt data
+- `System.Security.Cryptography` includes
+  - `RSACryptoServiceProvider` class
+  - `DSACryptoServiceProvider` class
+- Uses larger keys than symmetric keys
+- Limit on amount of data that can be encrypted (dependent on key size/algorithm)
+- slower
+- Data Encryption: Symmetric
+- Key Encryption: Asymmetric
