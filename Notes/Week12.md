@@ -35,3 +35,30 @@
 - If not called, Dispose() will be automatically called when the object is no longer in scope
 ## Managing the Lifetime of an Object
 - [Garbage Collection](https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals)
+
+# Encrypting and Decrypting Data
+## Symmetric Encryption
+### What is it?
+- Symmetric encryption is the cryptographic transformation of data using a mathematical algorithm
+- The same key is used to encrypt and decrypt data
+- `System.Security.Cryptography`
+  - `DESCryptoServiceProvider` Class
+  - `AESManaged` class
+  - `RC2CryptoServiceProvider` class
+  - And more!
+- Advantages
+  - No limit to the amount of data you can encrypt
+  - Fast, use less system resources
+- Disadvantages
+  - Same key
+- Steps
+  1. Create an `Rfc2898DeriveBytes` object
+  2. Create an `AESManaged` object
+  3. Generate secret key and IV (initial vector)
+     - IV creates a different encryption on the first data to be encrypted to protect the key
+  4. Create stream to buffer transformed data
+  5. Create symmetric encryptor or decryptor object
+  6. Create `CryptoStream` object
+  7. Write transformed data to buffer streams
+  8. Close streams
+## Asymmetric Encryption
