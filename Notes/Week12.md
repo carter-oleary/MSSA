@@ -91,8 +91,8 @@
 - Connection bt front and back end
 ### Resources
 - Cross platform resources
-[Learning Resource](https://learn.microsoft.com/en-us/training/paths/build-apps-with-dotnet-maui/)
-[.NET MAUI Shell](https://learn.microsoft.com/en-us/dotnet/maui/fundamentals/shell/?view=net-maui-9.0)
+- [Learning Resource](https://learn.microsoft.com/en-us/training/paths/build-apps-with-dotnet-maui/)
+- [.NET MAUI Shell](https://learn.microsoft.com/en-us/dotnet/maui/fundamentals/shell/?view=net-maui-9.0)
 
 
 
