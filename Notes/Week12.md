@@ -75,3 +75,29 @@
 - slower
 - Data Encryption: Symmetric
 - Key Encryption: Asymmetric
+
+# .NET MAUI
+- Allows to  build apps on any platform on one unified platform
+  - Single shared codebase that works on any platform
+## What it is
+- An open-source app platform from MSFT for building modern, performany and multi-platform iOS, Android, macOS, and Windows apps w C# and .NET from a single shared codebase
+- .NET Multi-platform App UI (MAUI)
+## MVC
+### View
+- Front End
+### Model
+- Domain classes
+### View-Model
+- Connection bt front and back end
+### Resources
+- Cross platform resources
+[Learning Resource](https://learn.microsoft.com/en-us/training/paths/build-apps-with-dotnet-maui/)
+[.NET MAUI Shell](https://learn.microsoft.com/en-us/dotnet/maui/fundamentals/shell/?view=net-maui-9.0)
+
+
+
+
+
+
+
+
