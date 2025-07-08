@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:GolfCompanion.ViewModels"
+             xmlns:model="clr-namespace:SharedGolfClasses;assembly=SharedGolfClasses"
+             x:Class="GolfCompanion.Views.InfoPage"
+             x:DataType="vm:CourseViewModel"
+             Title="Course Info">
+
+
+    <Grid ColumnDefinitions="*" RowDefinitions="*,100" RowSpacing="1" ColumnSpacing="5">
+        <Grid RowDefinitions="*,*,*,150" ColumnDefinitions="*,*">
+            <Label Style="{StaticResource InfoLabel}" Text="Course Id"/>
+            <Label Style="{StaticResource InfoLabel}" Text="Club Name" Grid.Row="1"/>
+            <Label Style="{StaticResource InfoLabel}" Text="Course Name" Grid.Row="2"/>
+
+
+            <Label Style="{StaticResource InfoLabel}" Text="{Binding GolfCourse.CourseId}" Grid.Column="1"/>
+            <Label Style="{StaticResource InfoLabel}" Text="{Binding GolfCourse.ClubName}" Grid.Column="1" Grid.Row="1"/>
+            <Label Style="{StaticResource InfoLabel}" Text="{Binding GolfCourse.CourseName}" Grid.Column="1" Grid.Row="2"/>
+
+            <HorizontalStackLayout Grid.Row="3" Grid.ColumnSpan="2" Padding="20" Spacing="15" HorizontalOptions="Center">
+                <!-- Gender Picker -->
+                <Picker Title="Select Gender" ItemsSource="{Binding GenderOptions}" SelectedItem="{Binding SelectedGender}" WidthRequest="200"/>
+
+                <!-- Tee Picker -->
+                <Picker Title="Select Tee" ItemsSource="{Binding FilteredTees}" SelectedItem="{Binding SelectedTee}" ItemDisplayBinding="{Binding DisplayName}" WidthRequest="300"/>
+            </HorizontalStackLayout>
+        </Grid>
+       
+
+
+
+        <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Center" Spacing="25" Padding="20">
+            <Button Text="Get Course" Style="{StaticResource ActionButton}" Command="{Binding GetCourseCommand}"/>
+            <Button Text="Input Round" Style="{StaticResource ActionButton}"/>
+        </HorizontalStackLayout>
+        
+
+    </Grid>
+    
+
+</ContentPage>
