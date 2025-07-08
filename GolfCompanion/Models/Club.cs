@@ -16,6 +16,6 @@ namespace GolfCompanion.Models
         [ForeignKey("UserId")]
         public int UserId { get; set; }
         public string ClubName { get; set; }
-        public int ClubDistance { get; set; }
+        public int? ClubDistance { get; set; }
     }
 }
