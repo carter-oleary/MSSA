@@ -14,6 +14,10 @@ namespace GolfCompanion.ViewModels
 {
     public partial class RoundInputViewModel : ObservableObject
     {
+        private int shotNum = 1;
+        [ObservableProperty]
+        private int distance;
+        private Round round { get; set; } = new();
         [ObservableProperty]
         private Tee selectedTee;
         [ObservableProperty]
@@ -44,6 +48,8 @@ namespace GolfCompanion.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<Shot> shots;
+
+        public Round CurrentRound { get; set; }
         public RoundInputViewModel(TeeSelectionService teeSelectionService) 
         {
             SelectedTee = teeSelectionService.SelectedTee;
@@ -70,17 +76,45 @@ namespace GolfCompanion.ViewModels
             {
                 Holes.Add(new IndexedHole { Index = i, Hole = selectedTee.Holes[i] });
             }
+            Shots = new ObservableCollection<Shot>();
         }
         [RelayCommand]
         async Task AddShot()
         {
+            
+            Shot newShot = new Shot
+            {
+                ShotId = shotNum++,
+                RoundId = round.RoundId,
+                HoleNumber = selectedIndexedHole.Index,
+                Club = SelectedClub,
+                ShotType = SelectedShotType,
+                Distance = Distance,
+                Lie = SelectedLie.ToString(),
+                Result = SelectedResult
+            };
 
+            Shots.Add(newShot);
         }
 
         [RelayCommand]
         async Task AddHole()
         {
+            if (SelectedIndexedHole == null || Holes == null || Holes.Count == 0)
+                return;
 
+            int currentIndex = Holes.IndexOf(SelectedIndexedHole);
+            int nextIndex = (currentIndex + 1) % Holes.Count;
+            shotNum = 1;
+
+        }
+
+        partial void OnSelectedIndexedHoleChanged(IndexedHole value)
+        {
+            if (value?.Hole != null)
+            {
+                Distance = value.Hole.Yardage;
+            }
         }
     }
 }
