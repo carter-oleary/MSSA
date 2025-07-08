@@ -8,31 +8,29 @@
              x:DataType="vm:RoundInputViewModel"
              Title="RoundInputView">
 
-    <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*,*,*,*" Padding="5" Margin="5">
-        <Picker Title="Hole" ItemsSource="{Binding Holes}" SelectedItem="{Binding SelectedIndexedHole}" ItemDisplayBinding="{Binding DisplayText}"/>
+    <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*,*,*,75" Padding="5" Margin="5">
+        <Picker Title="Hole" x:Name="HolePicker" ItemsSource="{Binding Holes}" SelectedItem="{Binding SelectedIndexedHole, Mode=TwoWay}" ItemDisplayBinding="{Binding DisplayText}"/>
         <Label Grid.Column="2" Style="{StaticResource InfoLabel}" Text="Distance"/>
-        <Entry Grid.Column="3" Text="{Binding SelectedIndexedHole.Hole.Yardage}"/>
+        <Entry Grid.Column="3" x:Name="DistanceEntry" Text="{Binding Distance, Mode=TwoWay}"/>
 
-        <Picker Grid.Row="1" Title="Club" SelectedItem="{Binding SelectedClub}" ItemsSource="{Binding Clubs}" ItemDisplayBinding="{Binding ClubName}"/>
-        <Picker Grid.Row="1" Grid.Column="2" Title="Shot Type" SelectedItem="{Binding SelectedShotType}" ItemsSource="{Binding ShotTypes}"/>
+        <Picker Grid.Row="1" x:Name="ClubPicker" Title="Club" SelectedItem="{Binding SelectedClub}" ItemsSource="{Binding Clubs}" ItemDisplayBinding="{Binding ClubName}"/>
+        <Picker Grid.Row="1" x:Name="ShotPicker" Grid.Column="2" Title="Shot Type" SelectedItem="{Binding SelectedShotType}" ItemsSource="{Binding ShotTypes}"/>
 
-        <Picker Grid.Row="2" Title="Lie" ItemsSource="{Binding Lies}" SelectedItem="{Binding SelectedLie}"/>
-        <Picker Grid.Row="2" Grid.Column="2" Title="Result" ItemsSource="{Binding Results}" SelectedItem="{Binding SelectedResult}"/>
+        <Picker Grid.Row="2" x:Name="LiePicker" Title="Lie" ItemsSource="{Binding Lies}" SelectedItem="{Binding SelectedLie}"/>
+        <Picker Grid.Row="2" x:Name="ResultPicker" Grid.Column="2" Title="Result" ItemsSource="{Binding Results}" SelectedItem="{Binding SelectedResult}"/>
 
         <Button Grid.Row="3" Grid.Column="1" Text="Add Shot" Style="{StaticResource ActionButton}" Command="{Binding AddShotCommand}"/>
         <Button Grid.Row="3" Grid.Column="2" Text="Complete Hole" Style="{StaticResource ActionButton}" Command="{Binding AddHoleCommand}"/>
         <Label Grid.Column="4" Text="Shot Tracker" HorizontalOptions="Center"/>
-        <CollectionView Grid.Row="1" Grid.Column="4" Grid.RowSpan="3" BindingContext="{Binding Shots}">
+        <CollectionView Grid.Row="1" Grid.Column="4" Grid.RowSpan="3" ItemsSource="{Binding Shots}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="local:Shot">
-                    <Grid Padding="5" ColumnDefinitions="50,*" RowDefinitions="*,*">
-                        <Border HeightRequest="80" Padding="0">
-                            <Label Style="{StaticResource InfoLabel}" Text="{Binding ShotId}" Grid.RowSpan="2"/>
-                            <VerticalStackLayout Grid.Column="1">
-                                <Label Text="{Binding Club}"/>
-                                <Label Text="{Binding Distance}"/>
-                            </VerticalStackLayout>
-                        </Border>
+                    <Grid Padding="5" ColumnDefinitions="Auto,*" RowDefinitions="Auto">
+                        <Label Grid.Column="0" Style="{StaticResource InfoLabel}" Text="{Binding ShotId}" FontSize="32"/>
+                        <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
+                            <Label Text="{Binding Club.ClubName}" FontSize="18"/>
+                            <Label Text="{Binding Distance}" FontSize="14"/>
+                        </VerticalStackLayout>
                     </Grid>
                 </DataTemplate>
                 
