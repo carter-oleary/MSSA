@@ -20,7 +20,7 @@ namespace GolfCompanion.Models
         [ForeignKey("CourseId")]
         public int CourseId { get; set; }
 
-        public List<Hole> Holes { get; set; }
+        public Tee Tee { get; set; }
         public double SG_Tee { get; set; }
         public double SG_App { get; set; }
         public double SG_Short { get; set; }
