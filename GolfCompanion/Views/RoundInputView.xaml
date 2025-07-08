@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GolfCompanion.Views.RoundInputView"
+             xmlns:local="clr-namespace:GolfCompanion.Models"
+             xmlns:model="clr-namespace:SharedGolfClasses;assembly=SharedGolfClasses"
+             xmlns:vm="clr-namespace:GolfCompanion.ViewModels"
+             x:DataType="vm:RoundInputViewModel"
+             Title="RoundInputView">
+
+    <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*,*,*" Padding="5" Margin="5">
+        <Picker Title="Hole" ItemsSource="{Binding Holes}" SelectedItem="{Binding SelectedIndexedHole}" ItemDisplayBinding="{Binding DisplayText}"/>
+        <Label Grid.Column="2" Style="{StaticResource InfoLabel}" Text="Distance"/>
+        <Entry Grid.Column="3" Text="{Binding SelectedIndexedHole.Hole.Yardage}"/>
+
+        <Picker Grid.Row="1" Title="Club"/>
+        <Picker Grid.Row="1" Grid.Column="2" Title="Shot Type"/>
+
+        <Picker Grid.Row="2" Title="Lie"/>
+        <Picker Grid.Row="2" Grid.Column="2" Title="Result"/>
+
+        <Button Grid.Row="3" Grid.Column="1" Text="Add Shot" Style="{StaticResource ActionButton}"/>
+        <Button Grid.Row="3" Grid.Column="2" Text="Complete Hole" Style="{StaticResource ActionButton}"/>
+
+
+
+
+
+    </Grid>
+    
+</ContentPage>

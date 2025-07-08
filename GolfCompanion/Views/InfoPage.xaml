@@ -33,7 +33,7 @@
 
         <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Center" Spacing="25" Padding="20">
             <Button Text="Get Course" Style="{StaticResource ActionButton}" Command="{Binding GetCourseCommand}"/>
-            <Button Text="Input Round" Style="{StaticResource ActionButton}"/>
+            <Button Text="Input Round" Style="{StaticResource ActionButton}" Command="{Binding GoToRoundInputCommand}"/>
         </HorizontalStackLayout>
         
 

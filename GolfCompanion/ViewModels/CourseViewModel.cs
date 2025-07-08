@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using SharedGolfClasses;
+using GolfCompanion.Views;
 
 namespace GolfCompanion.ViewModels
 {
@@ -35,15 +36,17 @@ namespace GolfCompanion.ViewModels
         public event EventHandler<string>? CourseLoadFailed;
 
         private readonly CourseInfoService _courseService;
+        private readonly TeeSelectionService _teeSelectionService;
 
         partial void OnSelectedGenderChanged(string value)
         {
             UpdateFilteredTees();
         }
 
-        public CourseViewModel(CourseInfoService courseService)
+        public CourseViewModel(CourseInfoService courseService, TeeSelectionService teeSelectionService)
         {
             _courseService = courseService;
+            _teeSelectionService = teeSelectionService;
             GenderOptions = new ObservableCollection<string> { "Male", "Female" };
             FilteredTees = new ObservableCollection<Tee>();
             SelectedGender = "Male";
@@ -82,6 +85,20 @@ namespace GolfCompanion.ViewModels
                     FilteredTees.Add(tee);
                 }
             }
+        }
+
+        [RelayCommand]
+        private async Task GoToRoundInput()
+        {
+            if(SelectedTee == null)
+            {
+                await Shell.Current.DisplayAlert("Select Tee", "Please select a tee to input your round", "OK");
+                return;
+            }
+
+            _teeSelectionService.SelectedTee = SelectedTee;
+            await Shell.Current.GoToAsync(nameof(RoundInputView));
+
         }
 
         

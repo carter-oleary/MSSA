@@ -24,6 +24,9 @@ namespace GolfCompanion
             builder.Services.AddSingleton<CourseInfoService>();
             builder.Services.AddSingleton<CourseViewModel>();
             builder.Services.AddSingleton<InfoPage>();
+            builder.Services.AddTransient<RoundInputView>();
+            builder.Services.AddTransient<RoundInputViewModel>();
+            builder.Services.AddSingleton<TeeSelectionService>();
             return builder.Build();
         }
     }

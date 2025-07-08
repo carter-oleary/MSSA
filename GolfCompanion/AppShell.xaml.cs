@@ -8,6 +8,7 @@ namespace GolfCompanion
         {
             InitializeComponent();
             Routing.RegisterRoute(nameof(InfoPage), typeof(InfoPage));
+            Routing.RegisterRoute(nameof(RoundInputView), typeof(RoundInputView));
         }
     }
 }
