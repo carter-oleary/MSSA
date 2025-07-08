@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace SharedGolfClasses
 {
-    // Golf Course API Key 'Authorization: Key 7VPX35OLKAFO2LNSUTHGCKNF3I'
     public partial class GolfCourse : ObservableObject
     {
         [Key]
