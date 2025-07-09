@@ -19,8 +19,9 @@
         <Picker Grid.Row="2" x:Name="LiePicker" Title="Lie" ItemsSource="{Binding Lies}" SelectedItem="{Binding SelectedLie}"/>
         <Picker Grid.Row="2" x:Name="ResultPicker" Grid.Column="2" Title="Result" ItemsSource="{Binding Results}" SelectedItem="{Binding SelectedResult}"/>
 
-        <Button Grid.Row="3" Grid.Column="1" Text="Add Shot" Style="{StaticResource ActionButton}" Command="{Binding AddShotCommand}"/>
-        <Button Grid.Row="3" Grid.Column="2" Text="Complete Hole" Style="{StaticResource ActionButton}" Command="{Binding AddHoleCommand}"/>
+        <Button Grid.Row="3" Grid.Column="0" Text="Add Shot" Style="{StaticResource ActionButton}" Command="{Binding AddShotCommand}"/>
+        <Button Grid.Row="3" Grid.Column="1" Text="Complete Hole" Style="{StaticResource ActionButton}" Command="{Binding AddHoleCommand}"/>
+        <Button Grid.Row="3" Grid.Column="2" Text="Save Round" Style="{StaticResource ActionButton}" Command="{Binding SaveRoundCommand}"/>
         <Label Grid.Column="4" Text="Shot Tracker" HorizontalOptions="Center"/>
         <CollectionView Grid.Row="1" Grid.Column="4" Grid.RowSpan="3" ItemsSource="{Binding Shots}">
             <CollectionView.ItemTemplate>

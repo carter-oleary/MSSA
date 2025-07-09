@@ -10,5 +10,6 @@ namespace GolfCompanion.Services
     public class TeeSelectionService
     {
         public Tee? SelectedTee {  get; set; }
+        public GolfCourse Course { get; set; }
     }
 }

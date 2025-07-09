@@ -60,7 +60,6 @@ namespace GolfCompanion.ViewModels
                 var result = await _courseService.GetCourseInfoAsync(20103);
                 GolfCourse = result;
                 UpdateFilteredTees();
-                await Shell.Current.DisplayAlert("Course Added", $"Course {GolfCourse.CourseId} Added: {GolfCourse.ClubName} - {GolfCourse.CourseName}", "Neat!");
                 
             }
             catch (Exception ex)
@@ -77,7 +76,6 @@ namespace GolfCompanion.ViewModels
             if (GolfCourse?.Tees == null) return;
 
             var courseTees = SelectedGender == "Male" ? GolfCourse.Tees.Male : GolfCourse.Tees.Female;
-            Shell.Current.DisplayAlert("First Tee", $"{courseTees[0].DisplayName}", "Oh It Works");
             if (courseTees != null)
             {
                 foreach (var tee in courseTees)
@@ -97,6 +95,7 @@ namespace GolfCompanion.ViewModels
             }
 
             _teeSelectionService.SelectedTee = SelectedTee;
+            _teeSelectionService.Course = GolfCourse;
             await Shell.Current.GoToAsync(nameof(RoundInputView));
 
         }
