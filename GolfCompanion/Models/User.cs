@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GolfCompanion.Models
-{
+{ 
     public class User
     {
         [Key]
@@ -19,5 +19,6 @@ namespace GolfCompanion.Models
         public string Gender { get; set; }
 
         public List<Club> Clubs { get; set; }
+        public ICollection<Round> Rounds { get; set; }
     }
 }
