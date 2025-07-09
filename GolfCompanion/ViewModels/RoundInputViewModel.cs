@@ -16,7 +16,7 @@ namespace GolfCompanion.ViewModels
     {
         private int shotNum = 1;
         [ObservableProperty]
-        private int distance;
+        private string distance;
         private Round round { get; set; } = new();
         [ObservableProperty]
         private Tee selectedTee;
@@ -89,12 +89,13 @@ namespace GolfCompanion.ViewModels
                 HoleNumber = selectedIndexedHole.Index,
                 Club = SelectedClub,
                 ShotType = SelectedShotType,
-                Distance = Distance,
+                Distance = Convert.ToInt32(Distance),
                 Lie = SelectedLie.ToString(),
                 Result = SelectedResult
             };
 
             Shots.Add(newShot);
+            ResetInputs();
         }
 
         [RelayCommand]
@@ -104,16 +105,33 @@ namespace GolfCompanion.ViewModels
                 return;
 
             int currentIndex = Holes.IndexOf(SelectedIndexedHole);
+            Holes[currentIndex].Shots = Shots.ToList<Shot>();
             int nextIndex = (currentIndex + 1) % Holes.Count;
+            SelectedIndexedHole = Holes[nextIndex];           
+            Shots.Clear();
             shotNum = 1;
+            ResetInputs();
 
+        }
+
+        private void ResetInputs()
+        {
+            SelectedClub = null;
+            SelectedShotType = default;
+            SelectedLie = default;
+            SelectedResult = default;
+            Distance = string.Empty;
         }
 
         partial void OnSelectedIndexedHoleChanged(IndexedHole value)
         {
             if (value?.Hole != null)
             {
-                Distance = value.Hole.Yardage;
+                Distance = value.Hole.Yardage.ToString();
+            }
+            if(value?.Shots.Count != 0)
+            {
+                foreach (var shot in value.Shots) Shots.Add(shot);
             }
         }
     }

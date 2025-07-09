@@ -14,6 +14,8 @@ namespace GolfCompanion.Models
         [Key]
         public int RoundId { get; set; }
 
+        public List<Shot> Shots { get; set; } = new();
+
         [ForeignKey("UserId")]
         public int UserId { get; set; }
 

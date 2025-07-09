@@ -267,6 +267,9 @@ ServiceFabricBackup/
 *.ldf
 *.ndf
 
+# Sensitive Data Protection
+appsettings.json
+
 # Business Intelligence projects
 *.rdl.data
 *.bim.layout

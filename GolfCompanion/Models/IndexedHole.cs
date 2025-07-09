@@ -12,6 +12,8 @@ namespace GolfCompanion.Models
         public int Index { get; set; }
         public Hole Hole { get; set; }
 
+        public List<Shot> Shots { get; set; } = new();
+
         public string DisplayText => $"Hole {Index + 1}";
     }
 }
