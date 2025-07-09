@@ -10,7 +10,7 @@ namespace GolfCompanion.Models
 {
     public enum ShotType { Tee, Recovery, Layup, Approach, Short, Putt }
     public enum Lie { Tee, Fairway, Rough, Sand, Green }
-    public enum Result { Right, Left, Long, Short, OnTarget, Penalty }
+    public enum Result { OnTarget, Right, Left, Long, Short, Penalty }
     public class Shot
     {
         [Key]
