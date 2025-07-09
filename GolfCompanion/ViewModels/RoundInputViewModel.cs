@@ -17,7 +17,7 @@ namespace GolfCompanion.ViewModels
         private int shotNum = 1;
         [ObservableProperty]
         private string distance;
-        private Round round { get; set; } = new();
+        private Round round { get; set; } 
         [ObservableProperty]
         private Tee selectedTee;
         [ObservableProperty]
@@ -48,8 +48,6 @@ namespace GolfCompanion.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<Shot> shots;
-
-        public Round CurrentRound { get; set; }
         public RoundInputViewModel(TeeSelectionService teeSelectionService) 
         {
             SelectedTee = teeSelectionService.SelectedTee;
@@ -77,6 +75,13 @@ namespace GolfCompanion.ViewModels
                 Holes.Add(new IndexedHole { Index = i, Hole = selectedTee.Holes[i] });
             }
             Shots = new ObservableCollection<Shot>();
+            round = new Round
+            {
+                RoundId = 1, // TBU DB
+                UserId = 1, // TBU DB
+                CourseId = teeSelectionService.Course.CourseId,
+                Tee = selectedTee
+            };
         }
         [RelayCommand]
         async Task AddShot()
@@ -95,6 +100,8 @@ namespace GolfCompanion.ViewModels
             };
 
             Shots.Add(newShot);
+            if (newShot.ShotType == ShotType.Putt && newShot.Result == Result.OnTarget) 
+                AddHole();
             ResetInputs();
         }
 
@@ -106,11 +113,47 @@ namespace GolfCompanion.ViewModels
 
             int currentIndex = Holes.IndexOf(SelectedIndexedHole);
             Holes[currentIndex].Shots = Shots.ToList<Shot>();
-            int nextIndex = (currentIndex + 1) % Holes.Count;
-            SelectedIndexedHole = Holes[nextIndex];           
             Shots.Clear();
             shotNum = 1;
+            await Shell.Current.DisplayAlert("Hole Added", $"{SelectedIndexedHole.DisplayText} added to round", "OK");
             ResetInputs();
+            int nextIndex = (currentIndex + 1) % Holes.Count;
+            SelectedIndexedHole = Holes[nextIndex];           
+            
+             
+
+        }
+
+        [RelayCommand]
+        async Task SaveRound()
+        {
+            // Check for shot inputs for every hole
+            foreach(var hole in Holes)
+            {
+                if(hole.Shots.Count == 0)
+                {
+                    await Shell.Current.DisplayAlert("Round Entry", $"Please input shots for {hole.DisplayText}", "OK");
+                    SelectedIndexedHole = hole;
+                    return;
+                }
+                round.Shots.AddRange(hole.Shots);
+
+            }
+            int score = round.Shots.Count - round.Tee.Par_Total;
+            string strScore;
+            switch(score)
+            {
+                case 0:
+                    strScore = "E";
+                    break;
+                case < 0:
+                    strScore = $"{score}";
+                    break;
+                case > 0:
+                    strScore = $"+{score}";
+                    break;
+            }
+            await Shell.Current.DisplayAlert("Round Score", $"You shot a {round.Shots.Count} for a score of {strScore}", "OK");
 
         }
 
@@ -129,7 +172,7 @@ namespace GolfCompanion.ViewModels
             {
                 Distance = value.Hole.Yardage.ToString();
             }
-            if(value?.Shots.Count != 0)
+            if(value.Shots.Count != 0)
             {
                 foreach (var shot in value.Shots) Shots.Add(shot);
             }
